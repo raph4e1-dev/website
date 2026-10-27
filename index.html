@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Photography</title>
+<style>
+  :root {
+    --paper: #ffffff;
+    --ink: #1a1a1a;
+    --red: #d8352a;                 /* placeholder colour: replace with images later */
+    --s: min(14vh, 9.5vw);          /* base size of one square */
+    --font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: var(--paper); color: var(--ink); font-family: var(--font); }
+
+  main { height: 100vh; height: 100dvh; display: grid; place-items: center; }
+
+  /* The row. Only the squares react to the pointer, so the gaps never trigger anything. */
+  .row { display: flex; align-items: center; justify-content: center; gap: calc(var(--s) * .18); pointer-events: none; }
+
+  .item {
+    --k: 1;                                   /* size multiplier */
+    --ty: 0px;                                /* vertical shift (used on phones to make room for text) */
+    position: relative; display: block; flex: none;
+    width: var(--s); aspect-ratio: 1;
+    pointer-events: auto; text-decoration: none;
+    transform: translateY(var(--ty)) scale(var(--k));
+    transition: transform .35s cubic-bezier(.2, .7, .2, 1);
+  }
+  .box { position: absolute; inset: 0; background: var(--red); overflow: hidden; }
+  .box img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .box:has(img) { background: none; }   /* images are transparent cut-outs: hide the red behind them */
+
+  /* Text sits on top of the square. The tag clips it, so it slides up out of the square's top edge. */
+  .tag {
+    position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%);
+    overflow: hidden; pointer-events: none; white-space: nowrap;
+  }
+  .label {
+    display: block; padding: 0 .1em .55em; color: #000;
+    font-weight: 700; font-size: clamp(14px, calc(var(--s) * .13), 26px); line-height: 1.2;
+    transform: translateY(100%);
+    transition: transform .35s cubic-bezier(.2, .7, .2, 1);
+  }
+  .item:focus-visible .label { transform: none; }
+
+  /* Hover: the one you point at grows, the others shrink slightly */
+  @media (hover: hover) {
+    .row:has(.item:hover) .item,
+    .row:has(.item:focus-visible) .item { --k: .95; }
+    .row:has(.item:hover) .item:hover,
+    .row:has(.item:focus-visible) .item:focus-visible { --k: 1.3; z-index: 1; }
+    .item:hover .label { transform: none; }
+  }
+  .item:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+  /* Phone / portrait: 8 in one line would be too small to tap, so they sit in a 4 x 2 grid */
+  @media (orientation: portrait) {
+    :root { --s: 18vw; }
+    .row { display: grid; grid-template-columns: repeat(4, var(--s)); gap: calc(var(--s) * .22); }
+  }
+  /* When a square in the bottom row is hovered, the top row moves up to make room for its text */
+  @media (hover: hover) and (orientation: portrait) {
+    .row:has(.item:nth-child(n+5):hover) .item:nth-child(-n+4),
+    .row:has(.item:nth-child(n+5):focus-visible) .item:nth-child(-n+4) { --ty: calc(var(--s) * -.55); }
+  }
+
+  /* Message shown while the pages don't exist yet */
+  .toast {
+    position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+    font: 13px var(--font); background: var(--ink); color: #fff;
+    padding: 10px 14px; opacity: 0; pointer-events: none; white-space: nowrap;
+  }
+  .toast.show { opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) { .item, .label { transition: none; } }
+</style>
+</head>
+<body>
+<main>
+  <!--
+    HOW TO EDIT
+    - Each square is one <a>. Change href to its page and the text in .label to its title.
+      To use a photo instead of red, put <img src="photos/cover.jpg" alt=""> inside .box.
+    - Colour of the squares: --red above. Base size: --s above.
+    - Hover sizes: --k: 1.3 (hovered) and --k: .95 (the others) in the hover rules.
+  -->
+  <nav class="row" aria-label="Collections">
+    <a class="item" href="page-1.html" aria-label="Oh Manchester"><span class="box"><img src="photos/manchester.webp" alt=""></span><span class="tag"><span class="label">Oh Manchester</span></span></a>
+    <a class="item" href="page-2.html" aria-label="Angoûmerde"><span class="box"><img src="photos/angouleme.webp" alt=""></span><span class="tag"><span class="label">Angoûmerde</span></span></a>
+    <a class="item" href="page-3.html" aria-label="Paris Life"><span class="box"></span><span class="tag"><span class="label">Paris Life</span></span></a>
+    <a class="item" href="page-4.html" aria-label="Back to the Old House"><span class="box"><img src="photos/backtotheoldhouse.webp" alt=""></span><span class="tag"><span class="label">Back to the Old House</span></span></a>
+    <a class="item" href="page-5.html" aria-label="Diagonal du vide"><span class="box"><img src="photos/clermont.webp" alt=""></span><span class="tag"><span class="label">Diagonal du vide</span></span></a>
+    <a class="item" href="page-6.html" aria-label="Amsterdam"><span class="box"><img src="photos/amsterdam.webp" alt=""></span><span class="tag"><span class="label">Amsterdam</span></span></a>
+    <a class="item" href="page-7.html" aria-label="Cannes 26"><span class="box"><img src="photos/cannes.webp" alt=""></span><span class="tag"><span class="label">Cannes 26</span></span></a>
+    <a class="item" href="page-8.html" aria-label="Tenerife - Madrid"><span class="box"><img src="photos/tenerife.webp" alt=""></span><span class="tag"><span class="label">Tenerife - Madrid</span></span></a>
+  </nav>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  // Set to true once page-1.html ... page-8.html exist.
+  const PAGES_READY = false;
+
+  const toast = document.getElementById('toast');
+  let timer;
+  document.querySelectorAll('.item').forEach(link =>
+    link.addEventListener('click', e => {
+      if (PAGES_READY) return;
+      e.preventDefault();
+      toast.textContent = 'This will open ' + link.getAttribute('href') + ' once the page exists.';
+      toast.classList.add('show');
+      clearTimeout(timer);
+      timer = setTimeout(() => toast.classList.remove('show'), 2600);
+    }));
+</script>
+</body>
+</html>
