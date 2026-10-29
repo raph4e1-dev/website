@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Amsterdam</title>
+<style>
+  :root {
+    --paper: #ffffff; --ink: #1a1a1a; --load: #ececec; --font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --w: min(26vw, 50vh);               /* width of a photo */
+    --gw: calc(var(--w) * 3.45);        /* width of one screen of 6 photos */
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: var(--paper); color: var(--ink); font-family: var(--font); }
+
+  .back {
+    position: fixed; z-index: 2; top: max(18px, env(safe-area-inset-top)); left: 5vw;
+    color: var(--ink); font-size: 14px; font-weight: 700; text-decoration: none; padding: 6px 0;
+  }
+  .back:hover { text-decoration: underline; }
+  .back:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* The page scrolls sideways. A thick scroll bar stays visible at the bottom. */
+  .scroller {
+    position: fixed; left: 0; top: 0; width: 100%; height: 100vh; height: 100dvh;
+    overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; outline: none;
+  }
+  .scroller::-webkit-scrollbar { height: 10px; }
+  .scroller::-webkit-scrollbar-track { background: var(--load); }
+  .scroller::-webkit-scrollbar-thumb { background: var(--ink); }
+  @supports (-moz-appearance: none) { .scroller { scrollbar-width: thin; scrollbar-color: var(--ink) var(--load); } }
+
+  .track { display: flex; width: max-content; height: 100%; padding: 0 max(0px, calc((100vw - var(--gw)) / 2)); }
+  .group { position: relative; flex: none; width: var(--gw); height: 100%; }
+
+  /* Each photo keeps its own shape. --dx / --dy = position from the centre of its screen
+     (dx in photo widths, dy in photo heights), --r = tilt, --a = shape (width / height), --k = size adjustment. */
+  .photo {
+    --dx: var(--dxl); --dy: var(--dyl); --sy: 1;
+    position: absolute; width: calc(var(--w) * var(--k, 1)); aspect-ratio: var(--a);
+    left: calc(50% + var(--dx) * var(--w)); top: calc(50% + var(--dy) * var(--sy) * var(--w) * .6667);
+    transform: translate(-50%, -50%) rotate(var(--r));
+    margin: 0; background: var(--load); overflow: hidden;
+  }
+  .photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  /* Every second screen is flipped top to bottom, for a looser collage (computers only) */
+  .group.flip .photo { --sy: -1; }
+
+  @media (orientation: portrait) {
+    :root { --w: min(42vw, 34vh); --gw: calc(var(--w) * 2.3); }
+    .photo { --dx: var(--dxp); --dy: var(--dyp); }
+    .group.flip .photo { --sy: 1; }
+  }
+</style>
+</head>
+<body>
+  <a class="back" href="index.html">Back</a>
+  <main class="scroller" id="scroller" tabindex="0" aria-label="Amsterdam: photos, scroll sideways">
+    <h1 class="sr-only">Amsterdam</h1>
+    <div class="track">
+      <section class="group">
+        <figure class="photo" style="--dxl:-1.1;--dyl:-0.62;--dxp:-0.56;--dyp:-1.45;--r:-1.8deg;--a:2560/1697;--k:1.003"><img src="web-photos/collection-6/000184970001-1-1600.webp" srcset="web-photos/collection-6/000184970001-1-800.webp 800w, web-photos/collection-6/000184970001-1-1600.webp 1600w, web-photos/collection-6/000184970001-1-2560.webp 2560w" sizes="(orientation: portrait) min(42vw, 34vh), min(26vw, 50vh)" width="2560" height="1697" alt="" decoding="async"></figure>
+        <figure class="photo" style="--dxl:-1.06;--dyl:0.64;--dxp:0.56;--dyp:-0.92;--r:0.9deg;--a:2560/1697;--k:1.003"><img src="web-photos/collection-6/000184970002-2-1600.webp" srcset="web-photos/collection-6/000184970002-2-800.webp 800w, web-photos/collection-6/000184970002-2-1600.webp 1600w, web-photos/collection-6/000184970002-2-2560.webp 2560w" sizes="(orientation: portrait) min(42vw, 34vh), min(26vw, 50vh)" width="2560" height="1697" alt="" decoding="async"></figure>
+        <figure class="photo" style="--dxl:0.02;--dyl:-0.72;--dxp:-0.55;--dyp:-0.27;--r:-2.1deg;--a:2560/1697;--k:1.003"><img src="web-photos/collection-6/000184970003-3-1600.webp" srcset="web-photos/collection-6/000184970003-3-800.webp 800w, web-photos/collection-6/000184970003-3-1600.webp 1600w, web-photos/collection-6/000184970003-3-2560.webp 2560w" sizes="(orientation: portrait) min(42vw, 34vh), min(26vw, 50vh)" width="2560" height="1697" alt="" decoding="async"></figure>
+        <figure class="photo" style="--dxl:0.05;--dyl:0.56;--dxp:0.57;--dyp:0.28;--r:2.7deg;--a:2560/1697;--k:1.003"><img src="web-photos/collection-6/000184970004-4-1600.webp" srcset="web-photos/collection-6/000184970004-4-800.webp 800w, web-photos/collection-6/000184970004-4-1600.webp 1600w, web-photos/collection-6/000184970004-4-2560.webp 2560w" sizes="(orientation: portrait) min(42vw, 34vh), min(26vw, 50vh)" width="2560" height="1697" alt="" decoding="async"></figure>
+        <figure class="photo" style="--dxl:1.12;--dyl:-0.55;--dxp:-0.57;--dyp:0.91;--r:1.4deg;--a:2560/1697;--k:1.003"><img src="web-photos/collection-6/000184970005-5-1600.webp" srcset="web-photos/collection-6/000184970005-5-800.webp 800w, web-photos/collection-6/000184970005-5-1600.webp 1600w, web-photos/collection-6/000184970005-5-2560.webp 2560w" sizes="(orientation: portrait) min(42vw, 34vh), min(26vw, 50vh)" width="2560" height="1697" alt="" decoding="async"></figure>
+        <figure class="photo" style="--dxl:1.1;--dyl:0.68;--dxp:0.55;--dyp:1.47;--r:-1.3deg;--a:2560/1697;--k:1.003"><img src="web-photos/collection-6/000184970006-6-1600.webp" srcset="web-photos/collection-6/000184970006-6-800.webp 800w, web-photos/collection-6/000184970006-6-1600.webp 1600w, web-photos/collection-6/000184970006-6-2560.webp 2560w" sizes="(orientation: portrait) min(42vw, 34vh), min(26vw, 50vh)" width="2560" height="1697" alt="" decoding="async"></figure>
+      </section>
+      <section class="group flip">
+        <figure class="photo" style="--dxl:-1.1;--dyl:-0.62;--dxp:-0.56;--dyp:-1.45;--r:-2.3deg;--a:2560/1697;--k:1.003"><img src="web-photos/collection-6/000196910033-1600.webp" srcset="web-photos/collection-6/000196910033-800.webp 800w, web-photos/collection-6/000196910033-1600.webp 1600w, web-photos/collection-6/000196910033-2560.webp 2560w" sizes="(orientation: portrait) min(42vw, 34vh), min(26vw, 50vh)" width="2560" height="1697" alt="" loading="lazy" decoding="async"></figure>
+        <figure class="photo" style="--dxl:-1.06;--dyl:0.64;--dxp:0.56;--dyp:-0.92;--r:2.6deg;--a:2560/1697;--k:1.003"><img src="web-photos/collection-6/000196910034-1600.webp" srcset="web-photos/collection-6/000196910034-800.webp 800w, web-photos/collection-6/000196910034-1600.webp 1600w, web-photos/collection-6/000196910034-2560.webp 2560w" sizes="(orientation: portrait) min(42vw, 34vh), min(26vw, 50vh)" width="2560" height="1697" alt="" loading="lazy" decoding="async"></figure>
+        <figure class="photo" style="--dxl:0.02;--dyl:-0.72;--dxp:-0.55;--dyp:-0.27;--r:-1.2deg;--a:2560/1697;--k:1.003"><img src="web-photos/collection-6/000196910035-1600.webp" srcset="web-photos/collection-6/000196910035-800.webp 800w, web-photos/collection-6/000196910035-1600.webp 1600w, web-photos/collection-6/000196910035-2560.webp 2560w" sizes="(orientation: portrait) min(42vw, 34vh), min(26vw, 50vh)" width="2560" height="1697" alt="" loading="lazy" decoding="async"></figure>
+        <figure class="photo" style="--dxl:0.05;--dyl:0.56;--dxp:0.57;--dyp:0.28;--r:2.1deg;--a:2560/1697;--k:1.003"><img src="web-photos/collection-6/000196910036-1600.webp" srcset="web-photos/collection-6/000196910036-800.webp 800w, web-photos/collection-6/000196910036-1600.webp 1600w, web-photos/collection-6/000196910036-2560.webp 2560w" sizes="(orientation: portrait) min(42vw, 34vh), min(26vw, 50vh)" width="2560" height="1697" alt="" loading="lazy" decoding="async"></figure>
+      </section>
+    </div>
+  </main>
+<script>
+  // Mouse wheel scrolls sideways too; arrow keys work as soon as the page opens.
+  const sc = document.getElementById('scroller');
+  sc.addEventListener('wheel', e => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { sc.scrollLeft += e.deltaY * (e.deltaMode === 1 ? 16 : 1); e.preventDefault(); }
+  }, { passive: false });
+  sc.focus({ preventScroll: true });
+</script>
+</body>
+</html>
